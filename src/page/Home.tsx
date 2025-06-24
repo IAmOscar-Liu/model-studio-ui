@@ -1,8 +1,8 @@
-import Header from "@/components/Header";
-import CurrentFederatedPartners from "@/feature/home/CurrentFederatedPartners";
-import LatestModelTrained from "@/feature/home/LatestModelTrained";
-import ModelTrainingHistory from "@/feature/home/ModelTrainingHistory";
-import ModelTrainingPanel from "@/feature/home/ModelTrainingPanel";
+import CurrentFederatedPartners from "@/feature/home/components/CurrentFederatedPartners";
+import LatestModelTrained from "@/feature/home/components/LatestModelTrained";
+import ModelTrainingHistory from "@/feature/home/components/ModelTrainingHistory";
+import ModelTrainingPanel from "@/feature/home/components/ModelTrainingPanel";
+import { PageTitle } from "@/router/layout/PageData";
 import { useLocation } from "react-router";
 
 function Home() {
@@ -10,9 +10,20 @@ function Home() {
   const queryParams = new URLSearchParams(location.search);
   const trainingStatus = queryParams.get("status");
 
+  // const breadcrumbs: Array<PageLink> = useMemo(
+  //   () => [
+  //     {
+  //       title: "Model Studio",
+  //       path: "/",
+  //     },
+  //   ],
+  //   [],
+  // );
+
   return (
     <>
-      <Header />
+      <PageTitle href="/">Model Studio</PageTitle>
+
       <h1 className="py-6 text-2xl font-medium">Model Studio</h1>
       <div className="space-y-6">
         {trainingStatus === "finished" && (
@@ -20,7 +31,7 @@ function Home() {
         )}
         <ModelTrainingPanel status={trainingStatus ?? undefined} />
         <ModelTrainingHistory />
-        <CurrentFederatedPartners className="mt-6" />
+        <CurrentFederatedPartners />
       </div>
     </>
   );

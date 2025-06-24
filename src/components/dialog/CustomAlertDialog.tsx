@@ -26,7 +26,7 @@ function CustomAlertDialog({
   trigger?: ReactNode;
   noStr?: string;
   yesStr?: string;
-  onCancel?: () => void; // <-- Add this
+  onCancel?: () => void;
   onAction?: () => void;
 }) {
   return (
