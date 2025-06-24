@@ -34,9 +34,7 @@ const mockChartData: CustomChartData = {
 
 function ModelTrainingHistory({ className }: { className?: string }) {
   return (
-    <div
-      className={cn("space-y-4 rounded-[12px] border p-6 shadow-md", className)}
-    >
+    <div className={cn("space-y-4 rounded-[12px] border p-6", className)}>
       <Accordion type="single" collapsible>
         {[
           "2025/05/07 11:34:19",

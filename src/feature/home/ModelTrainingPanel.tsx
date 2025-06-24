@@ -1,3 +1,6 @@
+import trainingResourceIcon from "@/assets/training-resource-icon.svg";
+import CustomAlertDialog from "@/components/dialog/CustomAlertDialog";
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -6,12 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import trainingResourceIcon from "@/assets/training-resource-icon.svg";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import CustomAlertDialog from "@/components/dialog/CustomAlertDialog";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
-import { useState, useEffect } from "react";
 
 const mockTrainingResource = [
   {
@@ -52,16 +52,21 @@ function ModelTrainingPanel({
   className?: string;
   status?: string;
 }) {
+  // Memoize the panel content so it only changes when `status` changes
+  const panelContent = useMemo(() => {
+    if (status === "training") {
+      return <Training />;
+    } else if (status === "finished") {
+      return <Finished />;
+    } else {
+      return <Dashboard />;
+    }
+  }, [status]);
+
   return (
     <div className={cn("rounded-2xl border p-6", className)}>
       <h1 className="mb-4 text-[28px]">Model Training Panel</h1>
-      {status === "training" ? (
-        <Training />
-      ) : status === "finished" ? (
-        <Finished />
-      ) : (
-        <Dashboard />
-      )}
+      {panelContent}
     </div>
   );
 }
@@ -167,8 +172,8 @@ function Dashboard({ className }: { className?: string }) {
       </div>
 
       <div className="mt-2 flex justify-end">
-        <Button className="rounded-full" onClick={handleImport}>
-          Import into the sandbox
+        <Button className="rounded-full px-12" onClick={handleImport}>
+          Train
         </Button>
       </div>
     </div>
@@ -212,19 +217,13 @@ function Training({ className }: { className?: string }) {
 }
 
 function Finished({ className }: { className?: string }) {
-  const navigate = useNavigate();
   return (
     <div
       className={cn("space-y-2 rounded-[12px] border p-4 shadow-md", className)}
     >
       <p className="text-lg">Your model has finished training! 🎉</p>
       <div className="flex justify-end">
-        <Button
-          className="rounded-full"
-          onClick={() => navigate("/?status=training")}
-        >
-          Import into the sandbox
-        </Button>
+        <Button className="rounded-full">Import into the sandbox</Button>
       </div>
     </div>
   );
