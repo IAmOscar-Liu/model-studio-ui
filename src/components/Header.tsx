@@ -1,11 +1,11 @@
-import breadCrumpSeparator from "@/assets/breadcrumb-separator.svg";
+import separatorIcon from "@/assets/breadcrumb-separator.svg";
 import { usePageData } from "@/router/layout/PageData";
 import { Link } from "react-router";
 
 function Header({ className }: { className?: string }) {
   const { pageTitle, pageBreadcrumbs, href } = usePageData();
 
-  const separator = <img className="size-4" src={breadCrumpSeparator} alt="" />;
+  const separator = <img className="size-4" src={separatorIcon} alt="" />;
 
   return (
     <div className={className}>
